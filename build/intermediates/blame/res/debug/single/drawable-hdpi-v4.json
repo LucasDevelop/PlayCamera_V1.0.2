@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "E:\\workspace\\PlayCamera_V1.0.2\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_launcher_icon.png",
+        "source": "E:\\workspace\\PlayCamera_V1.0.2\\res\\drawable-hdpi\\ic_launcher_icon.png"
+    },
+    {
+        "merged": "E:\\workspace\\PlayCamera_V1.0.2\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\welcom.png",
+        "source": "E:\\workspace\\PlayCamera_V1.0.2\\res\\drawable-hdpi\\welcom.png"
+    }
+]

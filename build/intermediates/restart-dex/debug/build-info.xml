@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<instant-run
+    abi="arm64-v8a,armeabi-v7a,armeabi"
+    api-level="21"
+    density="xxhdpi"
+    format="7"
+    timestamp="542443720327572" >
+
+    <task
+        name="javac"
+        duration="459" />
+    <task
+        name="instant-run-dex"
+        duration="0" />
+    <task
+        name="instant-run-transform"
+        duration="122" />
+    <task
+        name="verifier"
+        duration="45" />
+
+    <artifact
+        location="E:\workspace\PlayCamera_V1.0.2\build\outputs\apk\PlayCamera_V1.0.2-debug.apk"
+        type="MAIN" />
+
+    <build timestamp="542443720327572" >
+        <artifact
+            location="E:\workspace\PlayCamera_V1.0.2\build\outputs\apk\PlayCamera_V1.0.2-debug.apk"
+            type="MAIN" />
+    </build>
+
+</instant-run>

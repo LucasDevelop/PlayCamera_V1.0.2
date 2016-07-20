@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:id="@+id/rootView"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_marginRight="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp">
+
+            <Button
+                android:id="@+id/top"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerHorizontal="true"
+                android:text="↑"/>
+
+            <Button
+                android:id="@+id/left"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/top"
+                android:text="←"/>
+
+            <Button
+                android:id="@+id/right"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/top"
+                android:layout_marginLeft="50dp"
+                android:layout_toRightOf="@id/left"
+                android:text="→"/>
+
+            <Button
+                android:id="@+id/bottom"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/left"
+                android:layout_centerHorizontal="true"
+                android:text="↓"/>
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/calibration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="50dp"
+            android:text="校准完成"/>
+    </RelativeLayout>
+</RelativeLayout>

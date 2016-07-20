@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "E:\\workspace\\PlayCamera_V1.0.2\\build\\intermediates\\res\\merged\\debug\\layout\\activity_test.xml",
+        "source": "E:\\workspace\\PlayCamera_V1.0.2\\res\\layout\\activity_test.xml"
+    },
+    {
+        "merged": "E:\\workspace\\PlayCamera_V1.0.2\\build\\intermediates\\res\\merged\\debug\\layout\\view_controller.xml",
+        "source": "E:\\workspace\\PlayCamera_V1.0.2\\res\\layout\\view_controller.xml"
+    },
+    {
+        "merged": "E:\\workspace\\PlayCamera_V1.0.2\\build\\intermediates\\res\\merged\\debug\\layout\\activity_camera.xml",
+        "source": "E:\\workspace\\PlayCamera_V1.0.2\\res\\layout\\activity_camera.xml"
+    }
+]
