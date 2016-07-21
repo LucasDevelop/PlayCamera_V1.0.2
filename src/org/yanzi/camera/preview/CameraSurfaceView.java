@@ -42,5 +42,5 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
 	public SurfaceHolder getSurfaceHolder(){
 		return mSurfaceHolder;
 	}
-	
+
 }

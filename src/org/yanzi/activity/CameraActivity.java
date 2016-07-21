@@ -26,7 +26,7 @@ public class CameraActivity extends Activity implements CamOpenOverCallback {
 	ControllerView maskView = null;
 	float previewRate = -1f;
 	int DST_CENTER_RECT_WIDTH = 200; //单位是dip
-	int DST_CENTER_RECT_HEIGHT = 310;//单位是dip
+	int DST_CENTER_RECT_HEIGHT = 200;//单位是dip
 	Point rectPictureSize = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +34,12 @@ public class CameraActivity extends Activity implements CamOpenOverCallback {
 		Thread openThread = new Thread(){
 			@Override
 			public void run() {
+//				CameraInterface.getInstance().setCurrentOrientation(CameraInterface.LANDSCAPE);
 				CameraInterface.getInstance().doOpenCamera(CameraActivity.this);
 			}
 		};
 		openThread.start();
+		CameraInterface.getInstance().setApp(getApplication());
 		setContentView(R.layout.activity_camera);
 		initUI();
 		initViewParams();
@@ -143,4 +145,5 @@ public class CameraActivity extends Activity implements CamOpenOverCallback {
 		super.onDestroy();
 		CameraInterface.getInstance().doStopCamera();
 	}
+
 }

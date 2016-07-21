@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import org.yanzi.camera.CameraInterface;
 import org.yanzi.playcamera.R;
 import org.yanzi.util.DisplayUtil;
 
@@ -74,6 +75,7 @@ public class ControllerView extends RelativeLayout implements View.OnClickListen
         findViewById(R.id.calibration).setOnClickListener(this);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         rootView.setLayoutParams(params);
+        CameraInterface.getInstance().setScreenMetrics(DisplayUtil.getScreenMetrics(mContext));
     }
 
     //…Ë÷√æ€ΩπøÔ¥Û–°
@@ -131,6 +133,7 @@ public class ControllerView extends RelativeLayout implements View.OnClickListen
             default:
                 break;
         }
+        CameraInterface.getInstance().setFocusPoint(mCenterRect.left,mCenterRect.top);
         invalidate();
     }
 
@@ -141,4 +144,5 @@ public class ControllerView extends RelativeLayout implements View.OnClickListen
     public interface OnCheckedListener{
         void onComplete(View view);
     }
+
 }
