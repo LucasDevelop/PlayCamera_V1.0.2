@@ -6,7 +6,9 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.os.Looper;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -30,6 +32,7 @@ public class ControllerView extends RelativeLayout implements View.OnClickListen
     private Paint mExternalPaint;
     //每次位移距离  px
     private int moveDistance = 10;
+    private OnCheckedListener mListener;
 
     public ControllerView(Context context) {
         super(context, null);
@@ -48,7 +51,7 @@ public class ControllerView extends RelativeLayout implements View.OnClickListen
         mScreenY = point.y;
         //初始化画笔
         mInnerPaint = new Paint();
-        mInnerPaint.setColor(Color.GRAY);
+        mInnerPaint.setColor(Color.RED);
         mInnerPaint.setStyle(Paint.Style.STROKE);
         mInnerPaint.setStrokeWidth(5f);
         mInnerPaint.setAlpha(50);
@@ -61,7 +64,7 @@ public class ControllerView extends RelativeLayout implements View.OnClickListen
         mExternalPaint.setAlpha(180);
         mExternalPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
 
-        setBackgroundColor(Color.argb(180, 0, 0xff, 0));
+        setBackgroundColor(Color.TRANSPARENT);
         View.inflate(mContext, R.layout.view_controller, this);
         RelativeLayout rootView = (RelativeLayout) findViewById(R.id.rootView);
         findViewById(R.id.top).setOnClickListener(this);
@@ -76,13 +79,13 @@ public class ControllerView extends RelativeLayout implements View.OnClickListen
     //设置聚焦匡大小
     public void setCenterRect(Rect rect) {
         mCenterRect = rect;
-        Toast.makeText(mContext, "mCenterRect:" + mCenterRect, Toast.LENGTH_SHORT).show();
         //刷新界面
         postInvalidate();
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
+        Log.d("ControllerView", "mCenterRect:" + mCenterRect);
         if (mCenterRect == null)
             return;
         //绘制阴影部分
@@ -122,11 +125,20 @@ public class ControllerView extends RelativeLayout implements View.OnClickListen
                 mCenterRect.top = newBottom > mScreenY ? mCenterRect.bottom - rectHeight : mCenterRect.top + moveDistance;
                 break;
             case R.id.calibration:
-                Toast.makeText(mContext, "检验完成", Toast.LENGTH_SHORT).show();
+                if (mListener!=null)
+                    mListener.onComplete(v);
                 break;
             default:
                 break;
         }
         invalidate();
+    }
+
+    public void setOnCheckedListener(OnCheckedListener listener){
+        mListener = listener;
+    }
+
+    public interface OnCheckedListener{
+        void onComplete(View view);
     }
 }

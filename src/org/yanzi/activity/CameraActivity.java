@@ -1,5 +1,16 @@
 package org.yanzi.activity;
 
+import android.app.Activity;
+import android.graphics.Point;
+import android.graphics.Rect;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.SurfaceHolder;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.ImageButton;
+
 import org.yanzi.camera.CameraInterface;
 import org.yanzi.camera.CameraInterface.CamOpenOverCallback;
 import org.yanzi.camera.preview.CameraSurfaceView;
@@ -8,22 +19,10 @@ import org.yanzi.ui.ControllerView;
 import org.yanzi.ui.MaskView;
 import org.yanzi.util.DisplayUtil;
 
-import android.app.Activity;
-import android.graphics.Point;
-import android.graphics.Rect;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.SurfaceHolder;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.ImageButton;
-
 public class CameraActivity extends Activity implements CamOpenOverCallback {
 	private static final String TAG = "YanZi";
 	CameraSurfaceView surfaceView = null;
-	ImageButton shutterBtn;
+//	ImageButton shutterBtn;
 	ControllerView maskView = null;
 	float previewRate = -1f;
 	int DST_CENTER_RECT_WIDTH = 200; //单位是dip
@@ -35,7 +34,6 @@ public class CameraActivity extends Activity implements CamOpenOverCallback {
 		Thread openThread = new Thread(){
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				CameraInterface.getInstance().doOpenCamera(CameraActivity.this);
 			}
 		};
@@ -43,22 +41,25 @@ public class CameraActivity extends Activity implements CamOpenOverCallback {
 		setContentView(R.layout.activity_camera);
 		initUI();
 		initViewParams();
-		
-		shutterBtn.setOnClickListener(new BtnListeners());
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.camera, menu);
-		return true;
+//		shutterBtn.setOnClickListener(new BtnListeners());
 	}
 
 	private void initUI(){
 		surfaceView = (CameraSurfaceView)findViewById(R.id.camera_surfaceview);
-		shutterBtn = (ImageButton)findViewById(R.id.btn_shutter);
+//		shutterBtn = (ImageButton)findViewById(R.id.btn_shutter);
 		maskView = (ControllerView)findViewById(R.id.controller);
+		maskView.setOnCheckedListener(new ControllerView.OnCheckedListener() {
+			@Override
+			public void onComplete(View view) {
+				if(rectPictureSize == null){
+					rectPictureSize = createCenterPictureRect(DisplayUtil.dip2px(CameraActivity.this, DST_CENTER_RECT_WIDTH)
+							,DisplayUtil.dip2px(CameraActivity.this, DST_CENTER_RECT_HEIGHT));
+				}
+				CameraInterface.getInstance().doTakePicture(rectPictureSize.x, rectPictureSize.y);
+			}
+		});
 	}
+
 	private void initViewParams(){
 		LayoutParams params = surfaceView.getLayoutParams();
 		Point p = DisplayUtil.getScreenMetrics(this);
@@ -69,16 +70,14 @@ public class CameraActivity extends Activity implements CamOpenOverCallback {
 		surfaceView.setLayoutParams(params);
 
 		//手动设置拍照ImageButton的大小为120dip×120dip,原图片大小是64×64
-		LayoutParams p2 = shutterBtn.getLayoutParams();
-		p2.width = DisplayUtil.dip2px(this, 80);
-		p2.height = DisplayUtil.dip2px(this, 80);;		
-		shutterBtn.setLayoutParams(p2);	
-
+//		LayoutParams p2 = shutterBtn.getLayoutParams();
+//		p2.width = DisplayUtil.dip2px(this, 80);
+//		p2.height = DisplayUtil.dip2px(this, 80);;
+//		shutterBtn.setLayoutParams(p2);
 	}
 
 	@Override
 	public void cameraHasOpened() {
-		// TODO Auto-generated method stub
 		SurfaceHolder holder = surfaceView.getSurfaceHolder();
 		CameraInterface.getInstance().doStartPreview(holder, previewRate);
 		if(maskView != null){
@@ -87,24 +86,23 @@ public class CameraActivity extends Activity implements CamOpenOverCallback {
 			maskView.setCenterRect(screenCenterRect);
 		}
 	}
-	private class BtnListeners implements OnClickListener{
-
-		@Override
-		public void onClick(View v) {
-			// TODO Auto-generated method stub
-			switch(v.getId()){
-			case R.id.btn_shutter:
-				if(rectPictureSize == null){
-					rectPictureSize = createCenterPictureRect(DisplayUtil.dip2px(CameraActivity.this, DST_CENTER_RECT_WIDTH)
-							,DisplayUtil.dip2px(CameraActivity.this, DST_CENTER_RECT_HEIGHT));
-				}
-				CameraInterface.getInstance().doTakePicture(rectPictureSize.x, rectPictureSize.y);
-				break;
-			default:break;
-			}
-		}
-
-	}
+//	private class BtnListeners implements OnClickListener{
+//
+//		@Override
+//		public void onClick(View v) {
+//			switch(v.getId()){
+//			case R.id.btn_shutter:
+//				if(rectPictureSize == null){
+//					rectPictureSize = createCenterPictureRect(DisplayUtil.dip2px(CameraActivity.this, DST_CENTER_RECT_WIDTH)
+//							,DisplayUtil.dip2px(CameraActivity.this, DST_CENTER_RECT_HEIGHT));
+//				}
+//				CameraInterface.getInstance().doTakePicture(rectPictureSize.x, rectPictureSize.y);
+//				break;
+//			default:break;
+//			}
+//		}
+//
+//	}
 	
 	/**生成拍照后图片的中间矩形的宽度和高度
 	 * @param w 屏幕上的矩形宽度，单位px
@@ -115,8 +113,8 @@ public class CameraActivity extends Activity implements CamOpenOverCallback {
 		
 		int wScreen = DisplayUtil.getScreenMetrics(this).x;
 		int hScreen = DisplayUtil.getScreenMetrics(this).y;
-		int wSavePicture = CameraInterface.getInstance().doGetPrictureSize().y; //因为图片旋转了，所以此处宽高换位
-		int hSavePicture = CameraInterface.getInstance().doGetPrictureSize().x; //因为图片旋转了，所以此处宽高换位
+		int wSavePicture = CameraInterface.getInstance().doGetPictureSize().y; //因为图片旋转了，所以此处宽高换位
+		int hSavePicture = CameraInterface.getInstance().doGetPictureSize().x; //因为图片旋转了，所以此处宽高换位
 		float wRate = (float)(wSavePicture) / (float)(wScreen);
 		float hRate = (float)(hSavePicture) / (float)(hScreen);
 		float rate = (wRate <= hRate) ? wRate : hRate;//也可以按照最小比率计算

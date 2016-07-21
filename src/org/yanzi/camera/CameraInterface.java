@@ -28,7 +28,7 @@ public class CameraInterface {
 	private static CameraInterface mCameraInterface;
 
 	public interface CamOpenOverCallback{
-		public void cameraHasOpened();
+		void cameraHasOpened();
 	}
 
 	private CameraInterface(){
@@ -124,7 +124,7 @@ public class CameraInterface {
 			mCamera.takePicture(mShutterCallback, null, mRectJpegPictureCallback);
 		}
 	}
-	public Point doGetPrictureSize(){
+	public Point doGetPictureSize(){
 		Size s = mCamera.getParameters().getPictureSize();
 		return new Point(s.width, s.height);
 	}
